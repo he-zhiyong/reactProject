@@ -65,7 +65,6 @@ var config = {
             filename: 'index.html',
             template: path.join(__dirname, 'src/index.html'),
             inject: 'body',
-            title: "webpack demo",
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
