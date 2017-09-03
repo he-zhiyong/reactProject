@@ -6,11 +6,19 @@ const FormItem = Form.Item;
 class NormalLoginForm extends React.Component {
     handleSubmit(e) {
       e.preventDefault();
-      this.props.form.validateFields((err, values) => {
+      fetch('/name')
+            .then(res=>res.json())
+            .then(result =>{
+                if(result.success){
+                    alert(result.data.name)
+                }
+            })
+      /* this.props.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
         }
-      });
+      }); */
+      
     }
     render() {
       const { getFieldDecorator } = this.props.form;
