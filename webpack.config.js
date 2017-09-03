@@ -15,6 +15,7 @@ var config = {
     },
     module: {
         rules: [{
+            test: /\.(js|jsx)$/,
             exclude: path.resolve(__dirname, 'node_modules'),
             include: path.resolve(__dirname, 'src'),
             loader: "babel-loader",
@@ -22,6 +23,41 @@ var config = {
             test: /\.html$/,
             include: path.resolve(__dirname, 'src'),
             loader: "html-loader",
+        },{
+            test: /\.css/,
+            use: [{
+                loader: 'style-loader'
+            }, {
+                loader: 'css-loader'
+            }, {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: function () {
+                        return [ 
+                            require('postcss-import'),
+                            require('autoprefixer')
+                        ]
+                    }
+                }
+            }]
+        },{
+            test: /\.less/,
+            use: [{
+                loader: 'style-loader'
+            }, {
+                loader: 'css-loader'
+            }, {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: function () {
+                        return [ 
+                            require('autoprefixer')
+                        ]
+                    }
+                }
+            },{
+                loader: 'less-loader'
+            }]
         }]
     },
     plugins: [
