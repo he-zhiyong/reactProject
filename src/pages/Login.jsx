@@ -25,7 +25,7 @@ class NormalLoginForm extends React.Component {
       return (
         <div className="login-wrap">
           <div className="login-logo">
-            <h2 className="login-title">Login Demo</h2>
+            <h1 className="login-title">Login Demo</h1>
           </div>
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
