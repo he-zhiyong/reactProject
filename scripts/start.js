@@ -19,6 +19,11 @@ var devServer = new webpackDevServer(compiler, {
 		changeOrigin: true,
 		target: 'http://localhost:3001',
 		host: "localhost"
+	},{
+		path: '/api/*',
+		changeOrigin: true,
+		target: 'http://192.168.10.19:8080',
+		host: "localhost"
 	}]
 })
 devServer.listen(port, function (error) {

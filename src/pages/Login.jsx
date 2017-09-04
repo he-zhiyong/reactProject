@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import '../styles/login.less';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
@@ -6,12 +7,17 @@ const FormItem = Form.Item;
 class NormalLoginForm extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
-		fetch('/name')
+		/* fetch('/name')
 			.then(res => res.json())
 			.then(result => {
 				if (result.success) {
 					alert(result.data.name)
 				}
+			})  */
+		fetch('/api/random')
+			.then(res => res.json())
+			.then(result => {
+				alert(result)
 			})
 		/* this.props.form.validateFields((err, values) => {
 		  if (!err) {
@@ -53,7 +59,7 @@ class NormalLoginForm extends React.Component {
 						<Button type="primary" htmlType="submit" className="login-form-button">
 							Login
               </Button>
-						Or <a href="./register">register now!</a>
+						Or <Link to="/register">register now!</Link>
 					</FormItem>
 				</Form>
 			</div>

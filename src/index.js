@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/common.less';
-import Login from './pages/Login.jsx';
+import Routes from './routes.js';
 
-ReactDOM.render(<Login/>, document.getElementById('root'));
+ReactDOM.render(<Routes/>, document.getElementById('root'));
