@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackDevServer = require('webpack-dev-server');
 const config = require("../webpack.config.js");
 const port = 3000
