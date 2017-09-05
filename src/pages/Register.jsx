@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/register.less';
+import {Link} from 'react-router';
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -93,11 +94,23 @@ class RegistrationForm extends React.Component {
 			wrapperCol: {
 				xs: {
 					span: 24,
-					offset: 0,
+					offset: 2,
 				},
 				sm: {
-					span: 14,
+					span: 16,
 					offset: 8,
+				},
+			},
+		};
+		const LoginFormItemLayout = {
+			wrapperCol: {
+				xs: {
+					span: 2,
+					offset: 1,
+				},
+				sm: {
+					span: 2,
+					offset: 1,
 				},
 			},
 		};
@@ -242,6 +255,7 @@ class RegistrationForm extends React.Component {
 					</FormItem>
 					<FormItem {...tailFormItemLayout}>
 						<Button type="primary" htmlType="submit">Register</Button>
+						<label style={{ marginLeft: 30 }}>Or <Link to="/login">Login</Link></label>
 					</FormItem>
 				</Form>
 			</div>
