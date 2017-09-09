@@ -1,29 +1,36 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import '../styles/login.less';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
+	/* constructor(props) {
+		super(props);
+		this.props = {}
+	} */
 	handleSubmit(e) {
 		e.preventDefault();
-		/* fetch('/name')
-			.then(res => res.json())
-			.then(result => {
-				if (result.success) {
-					alert(result.data.name)
-				}
-			})  */
-		fetch('/api/random')
-			.then(res => res.json())
-			.then(result => {
-				alert(result)
-			})
-		/* this.props.form.validateFields((err, values) => {
+		this.props.form.validateFields((err, values) => {
 		  if (!err) {
 			console.log('Received values of form: ', values);
-		  }
-		}); */
+			var url = '/api/login';
+			var options = {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(values)
+			}	
+			fetch(url,options)
+				.then(res => res.json())
+				.then(result => {
+					alert(result.name)
+				})
+			}
+		}); 
 
 	}
 	render() {

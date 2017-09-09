@@ -1,11 +1,8 @@
-var express = require('express');
-var router = express.Router();
-
-router.get('/', function(req, res) {
-  res.send('hello, express');
-});
-router.get('/user', function(req, res) {
-  res.send('he');
-});
-
-module.exports = router;
+function routes(app) {
+	//接口路由
+	const api = ['login', 'register'];
+	api.forEach(function (service) {
+		app.use('/api/' + service, require('./api/' + service));
+	});
+};
+module.exports = routes

@@ -1,9 +1,16 @@
 var express = require('express');
+var routes = require('./routes');
+var bodyParser = require('body-parser');
+var path = require('path');
 var app = express();
+const port = 3001
 
-var userRouter = require('./routes/users');
+// body解析中间件
+app.use(bodyParser.json());
+// 设置静态文件目录
+app.use(express.static(path.join(__dirname, '../dist')));
+routes(app);
 
-//app.use('/', indexRouter);
-app.use('/', userRouter);
-
-app.listen(3001);
+app.listen(port, function () {
+    console.log(`server listening on port ${port}`);
+});

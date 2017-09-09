@@ -1,9 +1,9 @@
 import React from "react";
 import { createHashHistory } from 'history'
 import { Router, Route, useRouterHistory} from 'react-router'
-import Home from './pages/Home.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
+import Home from '../pages/Home.jsx';
+import Login from '../pages/Login.jsx';
+import Register from '../pages/Register.jsx';
 var appHistory = useRouterHistory(createHashHistory)({queryKey:false});//去除地址末尾key的hash值
 
 export default class Routes extends React.Component {
