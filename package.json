@@ -18,7 +18,8 @@
   "homepage": "https://github.com/He-zhiyong/reactProject#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "servers": "node servers/index.js",
+    "server": "node server/index.js",
+    "hot-server": "supervisor --harmony server/index.js",
     "start": "node scripts/start.js",
     "build": "npm run dist",
     "dev": "webpack-dev-server --config webpack.config.js --progress --colors --host localhost --port 3000 --inline --hot",
