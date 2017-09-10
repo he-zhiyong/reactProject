@@ -1,19 +1,23 @@
 var express = require('express');
 var router = express.Router();
+var UserModel = require('../../models/user');
 
-router.get('/', function(req, res) {
-    res.send('登录成功！');
-});
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     var userName = req.body.userName;
     var password = req.body.password;
-    var result = {
-        success:true,
-        userName:userName,
-        password:password
-    }
-    res.send(result);
-    
+    UserModel.getUserByName(userName)
+        .then(function (user) {
+            var result = {}
+            if (!user) {
+                result.message = '用户不存在';
+            }
+            // 检查密码是否匹配
+            if (password !== user.password) {
+                result.message = '登录失败！密码错误' 
+            }
+            res.send(result);
+        })
+        .catch(next);
 });
 
 module.exports = router;

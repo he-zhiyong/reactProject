@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import '../styles/login.less';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import Sha1 from 'sha1';
 
 const FormItem = Form.Item;
 
@@ -13,21 +14,24 @@ class NormalLoginForm extends React.Component {
 	handleSubmit(e){
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
-		  if (!err) {
-			var url = '/api/login';
-			var options = {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(values)
-			}	
-			fetch(url,options)
-				.then(res => res.json())
-				.then(result => {
-					alert(result.userName)
-				})
+			if (!err) {
+				var url = '/api/login';
+				var options = {
+					method: 'POST',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						userName:values.userName,
+						password:Sha1(values.password)
+					})
+				}	
+				fetch(url,options)
+					.then(res => res.json())
+					.then(result => {
+						alert(result.message)
+					})
 			}
 		}); 
 	}
