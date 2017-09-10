@@ -6,15 +6,14 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
-	/* constructor(props) {
+	constructor(props) {
 		super(props);
-		this.props = {}
-	} */
-	handleSubmit(e) {
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	handleSubmit(e){
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 		  if (!err) {
-			console.log('Received values of form: ', values);
 			var url = '/api/login';
 			var options = {
 				method: 'POST',
@@ -27,11 +26,10 @@ class NormalLoginForm extends React.Component {
 			fetch(url,options)
 				.then(res => res.json())
 				.then(result => {
-					alert(result.name)
+					alert(result.userName)
 				})
 			}
 		}); 
-
 	}
 	render() {
 		const { getFieldDecorator } = this.props.form;
@@ -65,7 +63,7 @@ class NormalLoginForm extends React.Component {
 						<a className="login-form-forgot" href="">Forgot password</a>
 						<Button type="primary" htmlType="submit" className="login-form-button">
 							Login
-              </Button>
+              			</Button>
 						Or <Link to="/register">register now!</Link>
 					</FormItem>
 				</Form>
