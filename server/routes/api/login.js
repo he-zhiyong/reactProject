@@ -7,7 +7,9 @@ router.post('/', function (req, res, next) {
     var password = req.body.password;
     UserModel.getUserByName(userName)
         .then(function (user) {
-            var result = {}
+            var result = {
+                message:'登录成功！'
+            }
             if (!user) {
                 result.message = '用户不存在';
             }
