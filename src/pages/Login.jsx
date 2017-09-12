@@ -30,7 +30,7 @@ class NormalLoginForm extends React.Component {
 				fetch(url,options)
 					.then(res => res.json())
 					.then(result => {
-						alert(result.message)
+						alert(result.message+"!")
 					})
 			}
 		}); 
