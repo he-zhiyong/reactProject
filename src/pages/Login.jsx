@@ -1,17 +1,20 @@
 import React from 'react';
+import { createHashHistory } from 'history'
+import { useRouterHistory } from 'react-router'
 import { Link } from 'react-router';
 import '../styles/login.less';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import Sha1 from 'sha1';
 
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super(...arguments);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	handleSubmit(e){
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
@@ -23,17 +26,21 @@ class NormalLoginForm extends React.Component {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						userName:values.userName,
-						password:Sha1(values.password)
+						userName: values.userName,
+						password: Sha1(values.password)
 					})
-				}	
-				fetch(url,options)
+				}
+				fetch(url, options)
 					.then(res => res.json())
 					.then(result => {
-						alert(result.message)
+						if (result.success) {
+							appHistory.push('/')
+						} else {
+							alert(result.message)
+						}
 					})
 			}
-		}); 
+		});
 	}
 	render() {
 		const { getFieldDecorator } = this.props.form;

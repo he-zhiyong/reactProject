@@ -3,22 +3,24 @@ var router = express.Router();
 var UserModel = require('../../models/user');
 
 router.post('/', function (req, res, next) {
-    var userName = req.body.userName;
-    var password = req.body.password;
-    // 待写入数据库的用户信息
     var user = {
-        userName: userName,
-        password: password
+        userName: req.body.userName,
+        password: req.body.password
     };
+    var result = {
+        success:false
+    }
     // 用户信息写入数据库
-    UserModel.create(user)
-        .then(function () {
-            var result = {}
-            result.message = '用户注册成功！';
-            res.send(result);
-        })
-        .catch(next);
+    UserModel.create(user,(err) =>{
+        if(err&&err.code === 11000){
+            result.success = false;
+            result.message = '用户已存在';
+        }else{
+            result.success = true;
+            result.message = '注册成功';
+        }
+        res.send(result);
+    })
 });
-
 
 module.exports = router;
