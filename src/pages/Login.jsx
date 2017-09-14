@@ -19,19 +19,26 @@ class NormalLoginForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				var url = '/api/login';
+				var user = {
+					userName: values.userName,
+					password: Sha1(values.password)
+				}
 				var options = {
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({
-						userName: values.userName,
-						password: Sha1(values.password)
-					})
+					body: JSON.stringify(user)
 				}
 				fetch(url, options)
-					.then(res => res.json())
+					.then((res) => {
+						if(res.status>=200 && res.status<300){
+							user.token = res.headers.get('Authorization')
+							localStorage.setItem('user',JSON.stringify(user))
+							return res.json()
+						}
+					})
 					.then(result => {
 						if (result.success) {
 							message.success(result.message);
