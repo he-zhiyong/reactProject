@@ -3,7 +3,7 @@ import { createHashHistory } from 'history'
 import { useRouterHistory } from 'react-router'
 import { Link } from 'react-router';
 import '../styles/login.less';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form,message, Icon, Input, Button, Checkbox } from 'antd';
 import Sha1 from 'sha1';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
@@ -34,9 +34,10 @@ class NormalLoginForm extends React.Component {
 					.then(res => res.json())
 					.then(result => {
 						if (result.success) {
+							message.success(result.message);
 							appHistory.push('/')
 						} else {
-							alert(result.message)
+							message.error(result.message);
 						}
 					})
 			}
