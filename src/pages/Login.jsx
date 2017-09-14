@@ -34,7 +34,7 @@ class NormalLoginForm extends React.Component {
 				fetch(url, options)
 					.then((res) => {
 						if(res.status>=200 && res.status<300){
-							user.token = res.headers.get('Authorization')
+							user.token = res.headers.get('x-access-token')
 							localStorage.setItem('user',JSON.stringify(user))
 							return res.json()
 						}

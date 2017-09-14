@@ -12,17 +12,13 @@ export default class Home extends React.Component {
         e.preventDefault();
         var user = JSON.parse(localStorage.getItem('user'))
         var url = '/api/user';
-        var data = {
-            userName: user.userName
-        }
         var options = {
-            method: 'POST',
+            method: 'get',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': user.token
+                'x-access-token': user.token
             },
-            body: JSON.stringify(data)
         }
         fetch(url, options)
             .then((res) => {

@@ -27,17 +27,10 @@ router.post('/', function (req, res, next) {
                     expiresIn: 60*60*1// token到期时间设置
                 }
                 var token = jwt.sign(content,secretOrPrivateKey,option);
-                user.token = token;
-                user.save((err) => {
-                    if(err){
-                        result.message = "数据库错误";
-                    }else{
-                        res.header('Authorization',token);
-                        result.success = true;
-                        result.message = '登录成功!'; 
-                    }
-                    res.send(result);
-                }); 
+                result.success = true;
+                result.message = '登录成功!'; 
+                res.header('x-access-token',token);
+                res.send(result);
             }
         } else {
             result.message = "用户不存在！";
