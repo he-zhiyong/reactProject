@@ -3,7 +3,7 @@ import { createHashHistory } from 'history'
 import { useRouterHistory } from 'react-router'
 import { Link } from 'react-router';
 import '../styles/login.less';
-import { Form,message, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, message, Icon, Input, Button, Checkbox } from 'antd';
 import Sha1 from 'sha1';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });

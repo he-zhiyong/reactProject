@@ -14,10 +14,10 @@ router.post('/', function (req, res, next) {
     UserModel.create(user,(err) =>{
         if(err&&err.code === 11000){
             result.success = false;
-            result.message = '用户已存在';
+            result.message = '用户已存在!';
         }else{
             result.success = true;
-            result.message = '注册成功';
+            result.message = '注册成功!';
         }
         res.send(result);
     })

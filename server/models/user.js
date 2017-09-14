@@ -1,4 +1,4 @@
-var User = require("../schemas/user"); 
+const User = require("../schemas/user"); 
 
 const UserModel = {
     // 注册一个用户
@@ -13,7 +13,7 @@ const UserModel = {
         var findUserName = {
             userName:userName
         } 
-        User.find(findUserName, (err, res) => {
+        User.findOne(findUserName, (err, res) => {
             callBack(err, res);
         })
     },

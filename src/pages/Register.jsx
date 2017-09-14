@@ -1,34 +1,34 @@
 import React from 'react';
 import { createHashHistory } from 'history'
-import { useRouterHistory} from 'react-router'
+import { useRouterHistory } from 'react-router'
 import '../styles/register.less';
-import {Link} from 'react-router';
-import { Form, Input,  Checkbox, Button } from 'antd';
+import { Link } from 'react-router';
+import { Form, message, Input, Checkbox, Button } from 'antd';
 import Sha1 from 'sha1';
 
-const appHistory = useRouterHistory(createHashHistory)({queryKey:false});
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 const FormItem = Form.Item;
 
 class RegistrationForm extends React.Component {
-	constructor(){
+	constructor() {
 		super(...arguments);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
 		this.checkPassword = this.checkPassword.bind(this);
 		this.checkConfirm = this.checkConfirm.bind(this);
-        this.state = {
+		this.state = {
 			confirmDirty: false,
 			autoCompleteResult: [],
 		}
-    };
-	handleSubmit (e) {
+	};
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				let agreement = values.agreement;
 				let password = values.password;
 				let confirm = values.confirm;
-				if(agreement&&password === confirm){
+				if (agreement && password === confirm) {
 					var url = '/api/register';
 					var options = {
 						method: 'POST',
@@ -37,28 +37,29 @@ class RegistrationForm extends React.Component {
 							'Content-Type': 'application/json'
 						},
 						body: JSON.stringify({
-							userName:values.userName,
-							password:Sha1(values.password)
-						})
-					}	
-					fetch(url,options)
-						.then(res => res.json())
-						.then(result => {
-							if(result.success){
-								appHistory.push('/login')
-							}else{
-								alert(result.message)
-							}
+							userName: values.userName,
+							password: Sha1(values.password)
 						})
 					}
+					fetch(url, options)
+						.then(res => res.json())
+						.then(result => {
+							if (result.success) {
+								message.success(result.message);
+								appHistory.push('/login')
+							} else {
+								message.error(result.message);
+							}
+						})
+				}
 			}
 		});
 	}
-	handleConfirmBlur (e){
+	handleConfirmBlur(e) {
 		const value = e.target.value;
 		this.setState({ confirmDirty: this.state.confirmDirty || !!value });
 	}
-	checkPassword(rule, value, callback){
+	checkPassword(rule, value, callback) {
 		const form = this.props.form;
 		if (value && value !== form.getFieldValue('password')) {
 			callback('Two passwords that you enter is inconsistent!');
@@ -66,7 +67,7 @@ class RegistrationForm extends React.Component {
 			callback();
 		}
 	}
-	checkConfirm (rule, value, callback) {
+	checkConfirm(rule, value, callback) {
 		const form = this.props.form;
 		if (value && this.state.confirmDirty) {
 			form.validateFields(['confirm'], { force: true });
