@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var UserModel = require('../../models/user');
+const express = require('express');
+const router = express.Router();
+const UserModel = require('../../mongo/models/user');
 
 router.post('/', function (req, res, next) {
     var user = {

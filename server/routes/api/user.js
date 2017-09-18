@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const checkToken = require('../../middlewares/check-token');
-const UserModel = require('../../models/user');
+const UserModel = require('../../mongo/models/user');
 
 router.get('/', checkToken, function (req, res) {
     var userName = req.userInfo.userName;

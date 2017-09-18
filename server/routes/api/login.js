@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const UserModel = require('../../models/user');
+const UserModel = require('../../mongo/models/user');
 
 router.post('/', function (req, res, next) {
     var userName = req.body.userName;
