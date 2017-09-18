@@ -2,6 +2,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const UserModel = require('../../mongo/models/user');
+const {tokenConfig} = require('../../config');
+const {secret,option} = tokenConfig.jwt; 
 
 router.post('/', function (req, res, next) {
     var userName = req.body.userName;
@@ -22,11 +24,7 @@ router.post('/', function (req, res, next) {
                 var content ={
                     userName:userName
                 };
-                var secretOrPrivateKey="tokenKey" // 加密的key（密钥）
-                var option = {
-                    expiresIn: 60*60*1// token到期时间设置
-                }
-                var token = jwt.sign(content,secretOrPrivateKey,option);
+                var token = jwt.sign(content,secret,option);
                 result.success = true;
                 result.message = '登录成功!'; 
                 res.header('x-access-token',token);

@@ -1,38 +1,66 @@
 import React from "react";
 //import {Link} from 'react-router';
-import { Layout, Menu, Icon, Button,message } from 'antd';
+import { createHashHistory } from 'history'
+import { useRouterHistory } from 'react-router'
+import { Layout, Menu, Icon, Button, message } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
+
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 export default class Home extends React.Component {
     constructor() {
         super(...arguments);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getUserInfo = this.getUserInfo.bind(this);
+        this.logout = this.logout.bind(this);
+        this.checkLogStatus = this.checkLogStatus.bind(this);
     }
-    handleSubmit(e) {
+    logout(e) {
         e.preventDefault();
+        this.checkLogStatus(() => {
+            localStorage.setItem('user', null);
+            message.success('退出登录！');
+        });
+    }
+    checkLogStatus(fn) {
         var user = JSON.parse(localStorage.getItem('user'))
-        var url = '/api/user';
-        var options = {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': user.token
-            },
+        if (user) {
+            fn()
+        } else {
+            message.error('请先登录！');
+            appHistory.push('/login');
         }
-        fetch(url, options)
-            .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    return res.json()
-                }
-            })
-            .then(result => {
-                if (result.success) {
-                    message.success(result.message);
-                } else {
-                    message.error(result.message);
-                }
-            })
+    }
+    getUserInfo(e) {
+        e.preventDefault();
+        this.checkLogStatus(() => {
+            var user = JSON.parse(localStorage.getItem('user'))
+            var url = '/api/user';
+            var options = {
+                method: 'get',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-token': user.token
+                },
+            }
+            fetch(url, options)
+                .then((res) => {
+                    if (res.status >= 200 && res.status < 300) {
+                        user.token = res.headers.get('x-access-token')
+                        localStorage.setItem('user', JSON.stringify(user))
+                        return res.json()
+                    }
+                })
+                .then(result => {
+                    if (result.success) {
+                        message.success(result.message);
+                    } else {
+                        message.error(result.message);
+                        localStorage.setItem('user', null);
+                        appHistory.push('/login');
+                    }
+                })
+        });
     }
     render() {
         return (
@@ -64,7 +92,8 @@ export default class Home extends React.Component {
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-                        <Button onClick = {this.handleSubmit}>test</Button>
+                        <Button onClick={this.getUserInfo}>用户信息</Button>
+                        <Button onClick={this.logout}>登出</Button>
                     </Header>
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div style={{ padding: 24, background: '#fff' }}>

@@ -1,19 +1,16 @@
-var mongoose = require('mongoose'),
-    DB_URL = 'mongodb://localhost:27017/react-project';
+const mongoose = require('mongoose');
+const {dbConfig} = require('../../config');
+const {url,option} = dbConfig.mongo; 
 
 /**
  * 连接
  */
-mongoose.Promise = global.Promise;
-mongoose.connect(DB_URL, {
-    useMongoClient: true
-});
-
+mongoose.connect(url, option);
 /**
  * 连接成功
  */
 mongoose.connection.on('connected', function () {
-    console.log('Mongoose connection open to ' + DB_URL);
+    console.log('Mongoose connection open to ' + url);
 });
 
 /**

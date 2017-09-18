@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const {tokenConfig} = require('../config');
+const {secret,option} = tokenConfig.jwt; 
 
 module.exports = function (req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -6,8 +8,7 @@ module.exports = function (req, res, next) {
         success: false
     }
     if (token) {
-        var secretOrPrivateKey = "tokenKey"
-        jwt.verify(token, secretOrPrivateKey, function (err, decoded) {
+        jwt.verify(token, secret, function (err, decoded) {
             if (err) {
                 switch (err.name) {
                     case "TokenExpiredError":
@@ -22,6 +23,11 @@ module.exports = function (req, res, next) {
                 }
                 res.send(result)
             } else {
+                var content ={
+                    userName:decoded.userName
+                };
+                var token = jwt.sign(content,secret,option);
+                res.header('x-access-token',token);
                 req.userInfo = decoded;
                 next();
             }
