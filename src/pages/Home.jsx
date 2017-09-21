@@ -1,18 +1,30 @@
 import React from "react";
 //import {Link} from 'react-router';
-import { createHashHistory } from 'history'
-import { useRouterHistory } from 'react-router'
-import { Layout, Menu, Icon, Button, message } from 'antd';
+import { createHashHistory } from 'history';
+import { useRouterHistory } from 'react-router';
+import '../styles/home.less';
+import { Layout, Input,Tabs, Menu, Icon, Button, message } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
+const Search = Input.Search;
+const TabPane = Tabs.TabPane;
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 export default class Home extends React.Component {
     constructor() {
         super(...arguments);
+        this.toggle = this.toggle.bind(this);
         this.getUserInfo = this.getUserInfo.bind(this);
         this.logout = this.logout.bind(this);
         this.checkLogStatus = this.checkLogStatus.bind(this);
+        this.state = {
+            collapsed: false,
+        };
+    }
+    toggle(){
+        this.setState({
+          collapsed: !this.state.collapsed,
+        });
     }
     logout(e) {
         e.preventDefault();
@@ -64,14 +76,33 @@ export default class Home extends React.Component {
     }
     render() {
         return (
-            <Layout style={{ height: '100%' }}>
+            <Layout className="home-layout">
                 <Sider
-                    breakpoint="lg"
+                    trigger={null}
+                    collapsible
+                    collapsed={this.state.collapsed}
+                    width="280"
                     collapsedWidth="0"
+                    className="sider"
                     onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
-                >
-                    <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                > 
+                    <div className="filter">
+                        <Search
+                            placeholder="Filter"
+                            onSearch={value => console.log(value)}
+                        />
+                    </div>
+                    <Tabs defaultActiveKey="1">
+                        <TabPane tab="History" key="1">
+                            <div className="content">
+                                <div className="tbar">
+                                    <span onClick={() => alert(1)}>Clear all</span>
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane tab="Collections" key="2">Content of Tab Pane 2</TabPane>
+                    </Tabs>
+                    {/* <Menu theme="light" mode="inline" defaultSelectedKeys={['4']}>
                         <Menu.Item key="1">
                             <Icon type="user" />
                             <span className="nav-text">nav 1</span>
@@ -88,12 +119,17 @@ export default class Home extends React.Component {
                             <Icon type="user" />
                             <span className="nav-text">nav 4</span>
                         </Menu.Item>
-                    </Menu>
+                    </Menu> */}
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
-                        <Button onClick={this.getUserInfo}>用户信息</Button>
-                        <Button onClick={this.logout}>登出</Button>
+                        <Icon
+                            className="trigger"
+                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                            onClick={this.toggle}
+                        />
+                        {/* <Button onClick={this.getUserInfo}>用户信息</Button>
+        <Button onClick={this.logout}>登出</Button> */}
                     </Header>
                     <Content style={{ margin: '24px 16px 0' }}>
                         <div style={{ padding: 24, background: '#fff' }}>
