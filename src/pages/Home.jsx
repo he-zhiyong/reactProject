@@ -169,11 +169,7 @@ export default class Home extends React.Component {
                     <Header>
                         <Row>
                             <Col span={2}>
-                                <Icon
-                                    className="trigger"
-                                    type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                                    onClick={this.toggle}
-                                />
+                                <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle}/>
                             </Col>
                             <Col span={4} offset={18}>
                                 <Dropdown overlay={menu} placement="bottomCenter">
