@@ -3,10 +3,11 @@ import React from "react";
 import { createHashHistory } from 'history';
 import { useRouterHistory } from 'react-router';
 import '../styles/home.less';
-import { Layout, Input,Tabs, Menu, Icon, Button, message } from 'antd';
+import { Layout, Input, Tabs, Collapse, Icon, Card, Row, Col,Avatar, Badge, Menu, Dropdown, Button, message } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
 const TabPane = Tabs.TabPane;
+const Panel = Collapse.Panel;
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
@@ -21,9 +22,9 @@ export default class Home extends React.Component {
             collapsed: false,
         };
     }
-    toggle(){
+    toggle() {
         this.setState({
-          collapsed: !this.state.collapsed,
+            collapsed: !this.state.collapsed,
         });
     }
     logout(e) {
@@ -75,6 +76,19 @@ export default class Home extends React.Component {
         });
     }
     render() {
+        const menu = (
+            <Menu>
+              <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3d menu item</a>
+              </Menu.Item>
+            </Menu>
+          );          
         return (
             <Layout className="home-layout">
                 <Sider
@@ -83,9 +97,8 @@ export default class Home extends React.Component {
                     collapsed={this.state.collapsed}
                     width="280"
                     collapsedWidth="0"
-                    className="sider"
                     onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
-                > 
+                >
                     <div className="filter">
                         <Search
                             placeholder="Filter"
@@ -94,50 +107,94 @@ export default class Home extends React.Component {
                     </div>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="History" key="1">
-                            <div className="content">
-                                <div className="tbar">
-                                    <span onClick={() => alert(1)}>Clear all</span>
-                                </div>
+                            <div className="tbar">
+                                <span onClick={() => alert(1)}>Clear all</span>
                             </div>
+                            <Collapse bordered={false} defaultActiveKey={['1']} >
+                                <Panel header="2017-09-20" key="1">
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                </Panel>
+                                <Panel header="2017-09-19" key="2">
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                    <Card title="Card title" extra={<a href="#">More</a>}>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                        <p>Card content</p>
+                                    </Card>
+                                </Panel>
+                                <Panel header="2017-09-18" key="3">
+                                    <p>dasdsadfdsf</p>
+                                </Panel>
+                                <Panel header="2017-09-17" key="4">
+                                    <p>dasdsadfdsf</p>
+                                </Panel>
+                                <Panel header="2017-09-16" key="5">
+                                    <p>dasdsadfdsf</p>
+                                </Panel>
+                                <Panel header="2017-09-15" key="6">
+                                    <p>dasdsadfdsf</p>
+                                </Panel>
+                                <Panel header="2017-09-14" key="7">
+                                    <p>dasdsadfdsf</p>
+                                </Panel>
+                            </Collapse>
                         </TabPane>
                         <TabPane tab="Collections" key="2">Content of Tab Pane 2</TabPane>
                     </Tabs>
-                    {/* <Menu theme="light" mode="inline" defaultSelectedKeys={['4']}>
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span className="nav-text">nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span className="nav-text">nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span className="nav-text">nav 3</span>
-                        </Menu.Item>
-                        <Menu.Item key="4">
-                            <Icon type="user" />
-                            <span className="nav-text">nav 4</span>
-                        </Menu.Item>
-                    </Menu> */}
                 </Sider>
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                            className="trigger"
-                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.toggle}
-                        />
+                    <Header>
+                        <Row>
+                            <Col span={2}>
+                                <Icon
+                                    className="trigger"
+                                    type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                                    onClick={this.toggle}
+                                />
+                            </Col>
+                            <Col span={4} offset={18}>
+                                <Dropdown overlay={menu} placement="bottomCenter">
+                                    <Badge count={5}>
+                                        <Avatar size="large" shape="square" icon="user" />
+                                    </Badge>
+                                </Dropdown>
+                            </Col>
+                        </Row>
+                        
+                        
                         {/* <Button onClick={this.getUserInfo}>用户信息</Button>
         <Button onClick={this.logout}>登出</Button> */}
                     </Header>
-                    <Content style={{ margin: '24px 16px 0' }}>
-                        <div style={{ padding: 24, background: '#fff' }}>
+                    <Content>
+                        <div>
                             content
-                    </div>
+                        </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©2016 Created by Ant UED
+                        API Test ©2017 Created by Hezhiyong
                     </Footer>
                 </Layout>
             </Layout>
