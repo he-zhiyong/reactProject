@@ -9,20 +9,14 @@ const { Header} = Layout;
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 export default class HeaderMain extends React.Component {
-    constructor() {
-        super(...arguments);
-        this.toggle = this.toggle.bind(this);
+    constructor(props) {
+        super(props);
         this.getUserInfo = this.getUserInfo.bind(this);
         this.logout = this.logout.bind(this);
         this.checkLogStatus = this.checkLogStatus.bind(this);
         this.state = {
-            collapsed: false,
+            sideCollapsed: false,
         };
-    }
-    toggle() {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
     }
     logout(e) {
         e.preventDefault();
@@ -90,7 +84,7 @@ export default class HeaderMain extends React.Component {
             <Header>
                 <Row>
                     <Col span={2}>
-                        <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle}/>
+                        <Icon className="trigger" type={this.props.sideCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle}/>
                     </Col>
                     <Col span={4} offset={18}>
                         <Dropdown overlay={menu} placement="bottomCenter">

@@ -10,7 +10,7 @@ var devServer = new webpackDevServer(compiler, {
 	hot: true,
 	inline: true,
 	publicPath: '/',
-	historyApiFallback: false,
+	historyApiFallback: true,
 	stats: {
 		colors: true
 	},
