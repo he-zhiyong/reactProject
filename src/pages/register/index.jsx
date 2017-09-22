@@ -1,7 +1,7 @@
 import React from 'react';
 import { createHashHistory } from 'history'
 import { useRouterHistory } from 'react-router'
-import '../styles/register.less';
+import './register.less';
 import { Link } from 'react-router';
 import { Form, message, Input, Checkbox, Button } from 'antd';
 import Sha1 from 'sha1';

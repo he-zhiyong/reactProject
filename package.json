@@ -39,12 +39,14 @@
     "express": "^4.15.4",
     "http-proxy-middleware": "^0.17.4",
     "jsonwebtoken": "^8.0.1",
-    "mongoose": "^4.11.11",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.12",
     "passport": "^0.4.0",
-    "passport-http-bearer": "^1.0.1"
+    "passport-http-bearer": "^1.0.1",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
-    "antd": "^2.12.7",
+    "antd": "^2.13.2",
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
@@ -84,9 +86,9 @@
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
-    "webpack": "^3.5.1",
+    "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.11.0",
-    "webpack-dev-server": "^2.5.1",
+    "webpack-dev-server": "^2.8.2",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
   }
