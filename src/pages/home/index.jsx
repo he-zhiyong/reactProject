@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.less';
-import moment from 'moment';
+//import moment from 'moment';
 import SiderMain from '../../components/sider-main/index.jsx';
 import HeaderMain from '../../components/header-main/index.jsx';
 import ContentMain from '../../components/content-main/index.jsx';
@@ -13,28 +13,7 @@ export default class Home extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             sideCollapsed: false,
-            apiData: [
-                {
-                    testDate:moment().format('YYYY-MM-DD'),
-                    title:"测试01"
-                },
-                {
-                    testDate:moment().subtract(7, 'days').format('YYYY-MM-DD'),
-                    title:"测试02"
-                },
-                {
-                    testDate:moment().subtract(3, 'days').format('YYYY-MM-DD'),
-                    title:"测试03"
-                },
-                {
-                    testDate:moment().subtract(3, 'days').format('YYYY-MM-DD'),
-                    title:"测试04"
-                },
-                {
-                    testDate:moment().subtract(1, 'days').format('YYYY-MM-DD'),
-                    title:"测试05"
-                },
-            ],
+            apiData:JSON.parse(localStorage.getItem("apiData"))
         };
     }
     toggle() {
