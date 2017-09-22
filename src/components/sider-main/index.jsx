@@ -9,16 +9,10 @@ const Panel = Collapse.Panel;
 export default class SiderLeft extends React.Component {
     constructor(props) {
         super(props);
-        //this.refresh = this.refresh.bind(this);
         this.state = {
             apiGroupData: this.apiDataHandler(this.props.apiData)
         };
     }
-    /* refresh(){
-        this.setState({
-            apiGroupData: this.apiDataHandler(this.props.getApiData())
-        });
-    } */
     apiDataHandler(data) {
         let apiData = this.sort(data,'testDate');
         var apiGroupData = []
@@ -83,7 +77,7 @@ export default class SiderLeft extends React.Component {
                     <TabPane tab="History" key="1">
                         <div className="tbar">
                             <span onClick={() => alert(1)}>Clear all</span>
-                            <span onClick={this.props.addApiData()}>Add</span>
+                            
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} >
                             {this.state.apiGroupData.map((apiGroup, index) => (

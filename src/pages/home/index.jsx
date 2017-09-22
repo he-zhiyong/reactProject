@@ -11,7 +11,6 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
-        this.addApiData = this.addApiData.bind(this);
         this.state = {
             sideCollapsed: false,
             apiData: [
@@ -43,7 +42,7 @@ export default class Home extends React.Component {
             sideCollapsed: !this.state.sideCollapsed,
         });
     }
-    addApiData(){
+   /*  addApiData(){
         var apiData = this.state.apiData;
         var newApiData =  {
             testDate:moment().subtract(10, 'days').format('YYYY-MM-DD'),
@@ -54,11 +53,11 @@ export default class Home extends React.Component {
             apiData: apiData
         });
         console.log(this.state.apiData)
-    }
+    } */
     render() {
         const sider = {
             sideCollapsed:this.state.sideCollapsed,
-            addApiData:this.addApiData,
+            //addApiData:this.addApiData,
             apiData:this.state.apiData
         }
         const header = {
