@@ -77,7 +77,7 @@ export default class SiderLeft extends React.Component {
                     <TabPane tab="History" key="1">
                         <div className="tbar">
                             <span onClick={() => alert(1)}>Clear all</span>
-                            
+                            <span onClick={this.props.addApiData}>Add</span>
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} >
                             {this.state.apiGroupData.map((apiGroup, index) => (
