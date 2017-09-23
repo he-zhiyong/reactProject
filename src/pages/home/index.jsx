@@ -1,4 +1,5 @@
 import React from 'react';
+//import {connect} from 'react-redux';
 import './home.less';
 import moment from 'moment';
 import SiderMain from '../../components/sider-main/index.jsx';
