@@ -20,6 +20,7 @@ router.post('/', function (req, res, next) {
             // 检查密码是否匹配
             if (password !== user.password) {
                 result.message = '登录失败，密码错误！';
+                res.send(result);
             } else {
                 var content ={
                     userName:userName
