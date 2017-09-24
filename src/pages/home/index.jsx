@@ -13,13 +13,13 @@ export default class Home extends React.Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-            sideCollapsed: false,
+            siderCollapsed: false,
             apiData:JSON.parse(localStorage.getItem("apiData"))||[]
         };
     }
     toggle() {
         this.setState({
-            sideCollapsed: !this.state.sideCollapsed,
+            siderCollapsed: !this.state.siderCollapsed,
         });
     }
     addApiData(){
@@ -29,17 +29,17 @@ export default class Home extends React.Component {
             title:"测试0221"
         }
         apiData.push(newApiData);
-        localStorage.setItem("apiData",JSON.stringify(apiData))
+        localStorage.setItem("apiData",JSON.stringify(apiData));
     }
     render() {
         const sider = {
-            sideCollapsed:this.state.sideCollapsed,
+            siderCollapsed:this.state.siderCollapsed,
             addApiData:this.addApiData,
             apiData:this.state.apiData
         }
         const header = {
             toggle:this.toggle,
-            sideCollapsed:this.state.sideCollapsed,
+            siderCollapsed:this.state.siderCollapsed,
         }   
         return (
             <Layout className="home-layout">

@@ -15,7 +15,7 @@ export default class HeaderMain extends React.Component {
         this.logout = this.logout.bind(this);
         this.checkLogStatus = this.checkLogStatus.bind(this);
         this.state = {
-            sideCollapsed: false,
+            siderCollapsed: false,
         };
     }
     logout(e) {
@@ -84,7 +84,7 @@ export default class HeaderMain extends React.Component {
             <Header>
                 <Row>
                     <Col span={2}>
-                        <Icon className="trigger" type={this.props.sideCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle}/>
+                        <Icon className="trigger" type={this.props.siderCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle}/>
                     </Col>
                     <Col span={4} offset={18}>
                         <Dropdown overlay={menu} placement="bottomCenter">

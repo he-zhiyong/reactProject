@@ -62,7 +62,7 @@ export default class SiderLeft extends React.Component {
             <Sider
                 trigger={null}
                 collapsible
-                collapsed={this.props.sideCollapsed}
+                collapsed={this.props.siderCollapsed}
                 width="280"
                 collapsedWidth="0"
                 onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
