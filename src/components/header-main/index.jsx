@@ -84,7 +84,7 @@ export default class HeaderMain extends React.Component {
             <Header>
                 <Row>
                     <Col span={2}>
-                        <Icon className="trigger" type={this.props.siderCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle}/>
+                        <Icon className="trigger" type={this.props.siderCollapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggleSider}/>
                     </Col>
                     <Col span={4} offset={18}>
                         <Dropdown overlay={menu} placement="bottomCenter">
