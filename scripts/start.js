@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const config = require("../webpack.config.js");
-const port = 80
+const port = 8080
 
 config.entry.index.unshift('webpack-dev-server/client?http://localhost:' + port, 'webpack/hot/dev-server');
 

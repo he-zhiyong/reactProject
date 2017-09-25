@@ -23,7 +23,7 @@ export default class Home extends React.Component {
         });
     }
     addApiData(){
-        var apiData = JSON.parse(localStorage.getItem("apiData"));
+        var apiData = JSON.parse(localStorage.getItem("apiData"))||[];
         var newApiData =  {
             testDate:moment().subtract(Math.random*10, 'days').format('YYYY-MM-DD'),
             title:"测试0221"
