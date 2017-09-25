@@ -1,5 +1,4 @@
 import React from 'react';
-//import {connect} from 'react-redux';
 import './home.less';
 import moment from 'moment';
 import SiderMain from '../../components/sider-main/index.jsx';
@@ -12,6 +11,7 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.updateApiData = this.updateApiData.bind(this);
         this.state = {
             siderCollapsed: false,
             apiData:JSON.parse(localStorage.getItem("apiData"))||[]
@@ -22,20 +22,18 @@ export default class Home extends React.Component {
             siderCollapsed: !this.state.siderCollapsed,
         });
     }
-    addApiData(){
-        var apiData = JSON.parse(localStorage.getItem("apiData"))||[];
-        var newApiData =  {
-            testDate:moment().subtract(Math.random*10, 'days').format('YYYY-MM-DD'),
-            title:"测试0221"
-        }
-        apiData.push(newApiData);
-        localStorage.setItem("apiData",JSON.stringify(apiData));
+    updateApiData(apiData){
+        this.setState({
+            apiData
+        })
+        localStorage.setItem("apiData",JSON.stringify(apiData))
+        console.log(this.state.apiData)
     }
     render() {
         const sider = {
             siderCollapsed:this.state.siderCollapsed,
-            addApiData:this.addApiData,
-            apiData:this.state.apiData
+            apiData:this.state.apiData,
+            updateApiData:this.updateApiData
         }
         const header = {
             toggle:this.toggle,

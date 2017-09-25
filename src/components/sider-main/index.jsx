@@ -1,5 +1,6 @@
 import React from "react";
 import './sider-main.less';
+import moment from 'moment';
 import { Layout, Input, Tabs, Collapse, Card } from 'antd';
 const { Sider } = Layout;
 const Search = Input.Search;
@@ -8,15 +9,36 @@ const Panel = Collapse.Panel;
 
 export default class SiderLeft extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
+        this.addApiData = this.addApiData.bind(this)
+        this.clearApiData = this.clearApiData.bind(this)
         this.state = {
-            apiGroupData: this.apiDataHandler(this.props.apiData)
+            apiGroupData: this.apiDataHandle(this.props.apiData)
         };
     }
-    apiDataHandler(data) {
-        let apiData = this.sort(data,'testDate');
-        var apiGroupData = []
-        function hasTestDate(apiData, testDate) {
+    addApiData(){
+        let num = this.props.apiData.length+1
+        let newApiData =  {
+            testDate:moment().subtract(num,'day').format('YYYY-MM-DD'),
+            title:"测试"+num
+        }
+        let apiData = this.props.apiData
+        apiData.push(newApiData)
+        this.setState({
+            apiGroupData:this.apiDataHandle(apiData)
+        })
+        this.props.updateApiData(apiData)
+    }
+    clearApiData(){
+        this.setState({
+            apiGroupData:[]
+        })
+        this.props.updateApiData([])
+    }
+    apiDataHandle(data) {
+        let apiData = data
+        let apiGroupData = []
+        const hasTestDate = (apiData, testDate) => {
             var hasTestDate = false;
             apiData.forEach((api, index) => {
                 if (api.testDate === testDate) {
@@ -25,17 +47,20 @@ export default class SiderLeft extends React.Component {
             });
             return hasTestDate;
         }
-        apiData.forEach((api, index) => {
-            let i = hasTestDate(apiGroupData, api.testDate)
-            if (i === false) {
-                apiGroupData.push({
-                    testDate: api.testDate,
-                    apiData: [api]
-                });
-            } else {
-                apiGroupData[i].apiData.push(api)
-            }
-        });
+        if(apiData.length){
+            apiData = this.sort(apiData,'testDate')
+            apiData.forEach((api, index) => {
+                let i = hasTestDate(apiGroupData, api.testDate)
+                if (i === false) {
+                    apiGroupData.push({
+                        testDate: api.testDate,
+                        apiData: [api]
+                    });
+                } else {
+                    apiGroupData[i].apiData.push(api)
+                }
+            });  
+        }
         return apiGroupData
     }
     sort(data, key) {
@@ -76,8 +101,8 @@ export default class SiderLeft extends React.Component {
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="History" key="1">
                         <div className="tbar">
-                            <span onClick={() => alert(1)}>Clear all</span>
-                            <span onClick={this.props.addApiData}>Add</span>
+                            <span onClick={this.clearApiData}>Clear all</span>
+                            <span onClick={this.addApiData}>Add</span>
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} >
                             {this.state.apiGroupData.map((apiGroup, index) => (
