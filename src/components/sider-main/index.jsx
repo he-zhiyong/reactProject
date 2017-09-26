@@ -31,14 +31,23 @@ export default class SiderLeft extends React.Component {
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} >
                             {this.props.apiGroupData.map((apiGroup, index) => (
-                                <Panel header={apiGroup.testDate} key={index + 1}>
-                                    <div className='buttons'>
-                                        <span><Icon type="plus" /></span>
-                                        <span><Icon type="delete" /></span>
-                                        <span><Icon type="ellipsis" /></span>
-                                    </div>
+                                <Panel 
+                                    header={
+                                        <div>
+                                            <span className='collapse-title'>
+                                                {apiGroup.testDate}
+                                            </span>
+                                            <span className='collapse-buttons'>
+                                                <Icon type="plus" title="Add" data-id={index + 1} onClick={this.props.addApiData}/>
+                                                <Icon type="delete" title="Delete" data-id={index + 1} />
+                                                <Icon type="ellipsis" title="More" data-id={index + 1} />
+                                            </span>                                        
+                                        </div>
+                                    } 
+                                    key={index + 1}
+                                >
                                     {apiGroup.apiData.map((api, index) => (
-                                        <Card key={index + 1} title={api.title} extra={<a>More</a>}>
+                                        <Card key={index + 1} title={api.title} extra={<Icon type="close" title="Delete"/>}>
                                             <p>Card content</p>
                                             <p>Card content</p>
                                             <p>Card content</p>
