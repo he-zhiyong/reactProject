@@ -26,11 +26,11 @@ export default class SiderLeft extends React.Component {
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="History" key="1">
                         <div className="tbar">
-                            <span onClick={this.props.clearApiData}>Clear all</span>
-                            <span onClick={this.props.addApiData}>Add</span>
+                            <span onClick={this.props.clearApiHistoryData}>Clear all</span>
+                            <span >refresh</span>
                         </div>
-                        <Collapse bordered={false} defaultActiveKey={['1']} >
-                            {this.props.apiGroupData.map((apiGroup, index) => (
+                        <Collapse bordered={false} accordion defaultActiveKey={['1']} >
+                            {this.props.apiHistoryGroupData.map((apiGroup, index) => (
                                 <Panel 
                                     header={
                                         <div>
@@ -38,16 +38,37 @@ export default class SiderLeft extends React.Component {
                                                 {apiGroup.testDate}
                                             </span>
                                             <span className='collapse-buttons'>
-                                                <Icon type="plus" title="Add" data-id={index + 1} onClick={this.props.addApiData}/>
-                                                <Icon type="delete" title="Delete" data-id={index + 1} />
-                                                <Icon type="ellipsis" title="More" data-id={index + 1} />
+                                                <Icon type="ellipsis" title="More" data-id={index + 1} 
+                                                    onClick={
+                                                        (e)=>{
+                                                            e.stopPropagation();
+                                                            this.props.deleteApiHistoryGroupData(apiGroup.groupId)
+                                                        }
+                                                    }
+                                                    />
+                                                <Icon type="delete" title="Delete" data-id={index + 1} 
+                                                    onClick={
+                                                        (e)=>{
+                                                            e.stopPropagation();
+                                                            this.props.deleteApiHistoryGroupData(apiGroup.groupId)
+                                                        }
+                                                    }
+                                                />
                                             </span>                                        
                                         </div>
                                     } 
                                     key={index + 1}
                                 >
-                                    {apiGroup.apiData.map((api, index) => (
-                                        <Card key={index + 1} title={api.title} extra={<Icon type="close" title="Delete"/>}>
+                                    {apiGroup.apiHistoryData.map((api, index) => (
+                                        <Card key={index + 1} title={api.title} 
+                                        extra={<Icon type="close" title="Delete" data-id={api.id} 
+                                            onClick={
+                                                (e)=>{
+                                                    e.preventDefault();
+                                                    this.props.deleteApiHistoryData(api.id)
+                                                }
+                                            }
+                                            />}>
                                             <p>Card content</p>
                                             <p>Card content</p>
                                             <p>Card content</p>
@@ -57,7 +78,45 @@ export default class SiderLeft extends React.Component {
                             ))}
                         </Collapse>
                     </TabPane>
-                    <TabPane tab="Collections" key="2">Content of Tab Pane 2</TabPane>
+                    <TabPane tab="Collections" key="2">
+                        <div className="tbar">
+                            <span onClick={this.props.clearApiHistoryData}>Clear all</span>
+                            <span onClick={this.props.addApiHistoryData}>Add</span>
+                        </div>
+                        <Collapse bordered={false} defaultActiveKey={['1']} >
+                            {this.props.apiHistoryGroupData.map((apiGroup, index) => (
+                                <Panel 
+                                    header={
+                                        <div>
+                                            <span className='collapse-title'>
+                                                {apiGroup.testDate}
+                                            </span>
+                                            <span className='collapse-buttons'>
+                                                <Icon type="ellipsis" title="More" data-id={index + 1} />
+                                                <Icon type="delete" title="Delete" data-id={index + 1} />
+                                                <Icon type="plus" title="Add" data-id={index + 1} onClick={this.props.addApiData}/>
+                                            </span>                                        
+                                        </div>
+                                    } 
+                                    key={index + 1}
+                                >
+                                    {apiGroup.apiHistoryData.map((api, index) => (
+                                        <Card key={index + 1} title={api.title} 
+                                        extra={<Icon type="close" title="Delete" data-id={api.id} onClick={
+                                                (e)=>{
+                                                    this.props.deleteApiHistoryData(api.id)
+                                                }
+                                            }
+                                            />}>
+                                            <p>Card content</p>
+                                            <p>Card content</p>
+                                            <p>Card content</p>
+                                        </Card>
+                                    ))}
+                                </Panel>
+                            ))}
+                        </Collapse>
+                    </TabPane>
                 </Tabs>
             </Sider>
         )

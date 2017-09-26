@@ -12,27 +12,34 @@ export default class Home extends React.Component {
         super(props);
         this.state = {
             siderCollapsed: false,
-            apiData: JSON.parse(localStorage.getItem("apiData")) || []
+            apiHistoryData: JSON.parse(localStorage.getItem("apiHistoryData")) || [],
+            historyActiveKey:[]
         };
     }
     render() {
         const sider = {
             siderCollapsed: this.state.siderCollapsed,
-            apiGroupData: this.apiDataHandle.call(this, this.state.apiData),
-            addApiData: this.addApiData.bind(this),
-            clearApiData: this.clearApiData.bind(this),
+            apiHistoryGroupData: this.apiHistoryDataHandle.call(this, this.state.apiHistoryData),
+            historyActiveKey:this.state.historyActiveKey,
+            refreshApiHistoryData: this.refreshApiHistoryData.bind(this),
+            deleteApiHistoryData: this.deleteApiHistoryData.bind(this),
+            deleteApiHistoryGroupData: this.deleteApiHistoryGroupData.bind(this),
+            clearApiHistoryData: this.clearApiHistoryData.bind(this),
         }
         const header = {
             siderCollapsed: this.state.siderCollapsed,
             toggleSider: this.toggleSider.bind(this),
-            addApiData: this.addApiData.bind(this)
+            addApiHistoryData: this.addApiHistoryData.bind(this)
+        }
+        const content = {
+            addApiHistoryData: this.addApiHistoryData.bind(this)
         }
         return (
             <Layout className="home-layout">
                 <SiderMain {...sider} />
                 <Layout>
                     <HeaderMain {...header} />
-                    <ContentMain />
+                    <ContentMain {...content}/>
                     <FooterMain />
                 </Layout>
             </Layout>
@@ -43,57 +50,73 @@ export default class Home extends React.Component {
             siderCollapsed: !this.state.siderCollapsed,
         });
     }
-    updateApiData(apiData){
-        this.setState({ apiData })
-        localStorage.setItem("apiData", JSON.stringify(apiData))
+    updateApiHistoryData(apiHistoryData){
+        this.setState({ apiHistoryData })
+        console.log(apiHistoryData)
+        localStorage.setItem("apiHistoryData", JSON.stringify(apiHistoryData))
     }
-    addApiData() {
-        let num = this.state.apiData.length + 1
+    refreshApiHistoryData(){
+        let apiHistoryData = JSON.parse(localStorage.getItem("apiHistoryData")) || []
+        let historyActiveKey = []
+        this.setState({ apiHistoryData,historyActiveKey })
+    }
+    addApiHistoryData() {
+        let num = this.state.apiHistoryData.length+1
         let newApiData = {
-            testDate: moment().subtract(num, 'day').format('YYYY-MM-DD'),
+            testDate: moment().format('YYYY-MM-DD'),
             title: "测试" + num,
-            id: num
+            id: num,
+            groupId:moment().format('YYYY-MM-DD'),
         }
-        let apiData = this.state.apiData
-        apiData.push(newApiData)
-        this.updateApiData.call(this,apiData)
+        let apiHistoryData = this.state.apiHistoryData
+        apiHistoryData.push(newApiData)
+        this.updateApiHistoryData.call(this,apiHistoryData)
     }
-    deleteApiData(id) {
-        let apiData = this.state.apiData
-        this.updateApiData.call(this,apiData)
+    deleteApiHistoryData(id) {
+        let apiHistoryData = this.state.apiHistoryData
+        apiHistoryData.forEach((item,index,apiHistoryData)=>{
+            if(item.id === id){
+                apiHistoryData.splice(index,1)
+            }
+        })
+        this.updateApiHistoryData.call(this,apiHistoryData)
     }
-    deleteApiGroupData(testDate){
-        let apiData = this.state.apiData
-        this.updateApiData.call(this,apiData)
+    deleteApiHistoryGroupData(groupId){
+        let apiHistoryData = this.state.apiHistoryData
+        apiHistoryData = apiHistoryData.filter((item,index,apiHistoryData)=>{
+            return item.groupId !== groupId
+        })
+        this.updateApiHistoryData.call(this,apiHistoryData)
     }
-    clearApiData() {
+    clearApiHistoryData() {
         this.setState({
-            apiData: []
+            apiHistoryData: []
         })
     }
-    apiDataHandle(data) {
-        let apiData = data
+    apiHistoryDataHandle(data) {
+        let apiHistoryData = data
         let apiGroupData = []
-        const hasTestDate = (apiData, testDate) => {
-            var hasTestDate = false;
-            apiData.forEach((api, index) => {
-                if (api.testDate === testDate) {
-                    hasTestDate = index;
+        const hasTestDate = (apiHistoryData, groupId) => {
+            var hasGroupId = false;
+            apiHistoryData.forEach((api, index) => {
+                if (api.groupId === groupId) {
+                    hasGroupId = index;
                 }
             });
-            return hasTestDate;
+            return hasGroupId;
         }
-        if (apiData.length) {
-            apiData = this.sortData(apiData, 'testDate')
-            apiData.forEach((api, index) => {
-                let i = hasTestDate(apiGroupData, api.testDate)
+        if (apiHistoryData.length) {
+            apiHistoryData = this.sortData(apiHistoryData, 'testDate')
+            apiHistoryData.forEach((api, index) => {
+                let i = hasTestDate(apiGroupData, api.groupId)
                 if (i === false) {
                     apiGroupData.push({
                         testDate: api.testDate,
-                        apiData: [api]
+                        groupId:api.groupId,
+                        apiHistoryData: [api]
                     });
                 } else {
-                    apiGroupData[i].apiData.push(api)
+                    apiGroupData[i].apiHistoryData.push(api)
                 }
             });
         }

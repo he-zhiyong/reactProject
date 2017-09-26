@@ -8,7 +8,7 @@ export default class ContentMain extends React.Component {
         return (
             <Content>
                 <div>
-                    content
+                <a onClick={this.props.addApiHistoryData}>Add</a>
                 </div>
             </Content>
         )
