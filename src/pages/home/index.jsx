@@ -13,18 +13,21 @@ export default class Home extends React.Component {
         this.state = {
             siderCollapsed: false,
             apiHistoryData: JSON.parse(localStorage.getItem("apiHistoryData")) || [],
-            historyActiveKey:[]
+            apiData:JSON.parse(localStorage.getItem("apiData")) || []
         };
     }
     render() {
         const sider = {
             siderCollapsed: this.state.siderCollapsed,
-            apiHistoryGroupData: this.apiHistoryDataHandle.call(this, this.state.apiHistoryData),
-            historyActiveKey:this.state.historyActiveKey,
-            refreshApiHistoryData: this.refreshApiHistoryData.bind(this),
+            apiHistoryGroupData: this.apiDataHandle.call(this, this.state.apiHistoryData),
             deleteApiHistoryData: this.deleteApiHistoryData.bind(this),
             deleteApiHistoryGroupData: this.deleteApiHistoryGroupData.bind(this),
             clearApiHistoryData: this.clearApiHistoryData.bind(this),
+            apiGroupData: this.apiDataHandle.call(this, this.state.apiData),
+            addApiData: this.addApiData.bind(this),            
+            deleteApiData: this.deleteApiData.bind(this),
+            deleteApiGroupData: this.deleteApiGroupData.bind(this),
+            clearApiData: this.clearApiData.bind(this),
         }
         const header = {
             siderCollapsed: this.state.siderCollapsed,
@@ -50,15 +53,93 @@ export default class Home extends React.Component {
             siderCollapsed: !this.state.siderCollapsed,
         });
     }
+    apiDataHandle(data) {
+        let apiData = data
+        let apiGroupData = []
+        const hasTestDate = (apiData, groupId) => {
+            var hasGroupId = false;
+            apiData.forEach((api, index) => {
+                if (api.groupId === groupId) {
+                    hasGroupId = index;
+                }
+            });
+            return hasGroupId;
+        }
+        if (apiData.length) {
+            apiData = this.sortData(apiData, 'testDate')
+            apiData.forEach((api, index) => {
+                let i = hasTestDate(apiGroupData, api.groupId)
+                if (i === false) {
+                    apiGroupData.push({
+                        testDate: api.testDate,
+                        groupId:api.groupId,
+                        groupName:"分组"+i,
+                        apiData: [api]
+                    });
+                } else {
+                    apiGroupData[i].apiData.push(api)
+                }
+            });
+        }
+        return apiGroupData
+    }
+    sortData(data, key) {
+        function by(key) {
+            return function (o, p) {
+                var a, b;
+                if (typeof o === "object" && typeof p === "object" && o && p) {
+                    a = o[key];
+                    b = p[key];
+                    if (a === b) {
+                        return 0;
+                    }
+                    if (typeof a === typeof b) {
+                        return a > b ? -1 : 1;
+                    }
+                    return typeof a > typeof b ? -1 : 1;
+                }
+            }
+        }
+        return data.sort(by(key));
+    }
+    updateApiData(apiData){
+        this.setState({ apiData })
+        localStorage.setItem("apiData", JSON.stringify(apiData))
+    }
+    addApiData() {
+        let num = this.state.apiData.length+1
+        let newApiData = {
+            testDate: moment().format('YYYY-MM-DD'),
+            title: "测试" + num,
+            id: num,
+            groupId:moment().format('YYYY-MM-DD'),
+        }
+        let apiData = this.state.apiData
+        apiData.push(newApiData)
+        this.updateApiData.call(this,apiData)
+    }
+    deleteApiData(id) {
+        let apiData = this.state.apiData
+        apiData.forEach((item,index,apiData)=>{
+            if(item.id === id){
+                apiData.splice(index,1)
+            }
+        })
+        this.updateApiData.call(this,apiData)
+    }
+    deleteApiGroupData(groupId){
+        let apiData = this.state.apiData
+        apiData = apiData.filter((item,index,apiData)=>{
+            return item.groupId !== groupId
+        })
+        this.updateApiData.call(this,apiData)
+    }
+    clearApiData() {
+        this.updateApiData.call(this,[])
+    }
     updateApiHistoryData(apiHistoryData){
         this.setState({ apiHistoryData })
-        console.log(apiHistoryData)
         localStorage.setItem("apiHistoryData", JSON.stringify(apiHistoryData))
-    }
-    refreshApiHistoryData(){
-        let apiHistoryData = JSON.parse(localStorage.getItem("apiHistoryData")) || []
-        let historyActiveKey = []
-        this.setState({ apiHistoryData,historyActiveKey })
     }
     addApiHistoryData() {
         let num = this.state.apiHistoryData.length+1
@@ -89,56 +170,7 @@ export default class Home extends React.Component {
         this.updateApiHistoryData.call(this,apiHistoryData)
     }
     clearApiHistoryData() {
-        this.setState({
-            apiHistoryData: []
-        })
+        this.updateApiHistoryData.call(this,[])
     }
-    apiHistoryDataHandle(data) {
-        let apiHistoryData = data
-        let apiGroupData = []
-        const hasTestDate = (apiHistoryData, groupId) => {
-            var hasGroupId = false;
-            apiHistoryData.forEach((api, index) => {
-                if (api.groupId === groupId) {
-                    hasGroupId = index;
-                }
-            });
-            return hasGroupId;
-        }
-        if (apiHistoryData.length) {
-            apiHistoryData = this.sortData(apiHistoryData, 'testDate')
-            apiHistoryData.forEach((api, index) => {
-                let i = hasTestDate(apiGroupData, api.groupId)
-                if (i === false) {
-                    apiGroupData.push({
-                        testDate: api.testDate,
-                        groupId:api.groupId,
-                        apiHistoryData: [api]
-                    });
-                } else {
-                    apiGroupData[i].apiHistoryData.push(api)
-                }
-            });
-        }
-        return apiGroupData
-    }
-    sortData(data, key) {
-        function by(key) {
-            return function (o, p) {
-                var a, b;
-                if (typeof o === "object" && typeof p === "object" && o && p) {
-                    a = o[key];
-                    b = p[key];
-                    if (a === b) {
-                        return 0;
-                    }
-                    if (typeof a === typeof b) {
-                        return a > b ? -1 : 1;
-                    }
-                    return typeof a > typeof b ? -1 : 1;
-                }
-            }
-        }
-        return data.sort(by(key));
-    }
+    
 }

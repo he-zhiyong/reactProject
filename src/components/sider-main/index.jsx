@@ -27,7 +27,6 @@ export default class SiderLeft extends React.Component {
                     <TabPane tab="History" key="1">
                         <div className="tbar">
                             <span onClick={this.props.clearApiHistoryData}>Clear all</span>
-                            <span >refresh</span>
                         </div>
                         <Collapse bordered={false} accordion defaultActiveKey={['1']} >
                             {this.props.apiHistoryGroupData.map((apiGroup, index) => (
@@ -59,7 +58,7 @@ export default class SiderLeft extends React.Component {
                                     } 
                                     key={index + 1}
                                 >
-                                    {apiGroup.apiHistoryData.map((api, index) => (
+                                    {apiGroup.apiData.map((api, index) => (
                                         <Card key={index + 1} title={api.title} 
                                         extra={<Icon type="close" title="Delete" data-id={api.id} 
                                             onClick={
@@ -80,16 +79,16 @@ export default class SiderLeft extends React.Component {
                     </TabPane>
                     <TabPane tab="Collections" key="2">
                         <div className="tbar">
-                            <span onClick={this.props.clearApiHistoryData}>Clear all</span>
-                            <span onClick={this.props.addApiHistoryData}>Add</span>
+                            <span onClick={this.props.clearApiData}>Clear all</span>
+                            <span onClick={this.props.addApiData}>Add</span>
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} >
-                            {this.props.apiHistoryGroupData.map((apiGroup, index) => (
+                            {this.props.apiGroupData.map((apiGroup, index) => (
                                 <Panel 
                                     header={
                                         <div>
                                             <span className='collapse-title'>
-                                                {apiGroup.testDate}
+                                                {apiGroup.groupName}
                                             </span>
                                             <span className='collapse-buttons'>
                                                 <Icon type="ellipsis" title="More" data-id={index + 1} />
@@ -100,11 +99,11 @@ export default class SiderLeft extends React.Component {
                                     } 
                                     key={index + 1}
                                 >
-                                    {apiGroup.apiHistoryData.map((api, index) => (
+                                    {apiGroup.apiData.map((api, index) => (
                                         <Card key={index + 1} title={api.title} 
                                         extra={<Icon type="close" title="Delete" data-id={api.id} onClick={
                                                 (e)=>{
-                                                    this.props.deleteApiHistoryData(api.id)
+                                                    this.props.deleteApiData(api.id)
                                                 }
                                             }
                                             />}>
