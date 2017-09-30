@@ -1,9 +1,44 @@
 .ant-layout-content{
     margin: 15px 15px 0 15px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
     display: flex;
-    div{
+    .ant-tabs{
         flex: auto;
-        background:#fff;
-        border-radius: 5px;
+        display: flex;
+        flex-flow: column;
+        .ant-tabs-bar{
+            display: block;
+            margin-bottom: 0;
+            .ant-tabs-nav-container{
+                width: 95%;
+                .ant-tabs-nav-scroll{
+                max-width: 100%;
+                }
+            }
+        }
+        .ant-tabs-content{
+            flex: auto;
+            .header{
+                display: flex;
+                padding: 10px 0;
+                .ant-input-group-wrapper{
+                    display: inline-block;
+                    flex: auto;
+                    .addParams{
+                        cursor: pointer;
+                    }
+                }
+                .buttons{
+                    display: inline-block;
+                    width:600px;
+                    margin-left:20px;
+                    .ant-btn-group{
+                        margin-right:20px;
+                    }
+                }
+            }
+        }
     }
 }
