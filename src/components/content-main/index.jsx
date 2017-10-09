@@ -2,6 +2,7 @@ import React from "react";
 import './content-main.less';
 import { Layout, Button, Table, Popconfirm, Tabs, Dropdown, Input, TextArea ,Radio,Select, Menu } from 'antd';
 const { Content } = Layout;
+const ButtonGroup = Button.Group;
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -257,10 +258,10 @@ export default class ContentMain extends React.Component {
                                     <Dropdown.Button size="large" onClick={() => alert(1)} overlay={menu} loading>Save</Dropdown.Button>
                                 </div>
                             </div>
-                            <div className="content">
+                            <div className="body">
                                 <Tabs defaultActiveKey="3">
                                     <TabPane tab="Authorization" disabled key="1">
-                                        Type
+                                        
                                     </TabPane>
                                     <TabPane tab="Headers" key="2">
                                         <div className="body">
@@ -289,9 +290,19 @@ export default class ContentMain extends React.Component {
                                 </Tabs>
                                 <div className="">
                                     <h3 className="title">Response</h3>
-                                    <Tabs defaultActiveKey="1">
+                                    <Tabs defaultActiveKey="1" tabBarExtraContent={
+                                        <div className="info">
+                                            <label>Status: <span>200 OK</span></label>
+                                            <label>Time: <span>34ms</span></label>
+                                            <label>Size: <span>109.88kb</span></label>
+                                        </div>
+                                    }>
                                         <TabPane tab="Body" key="1">
-                                            Type
+                                            <ButtonGroup>
+                                                <Button>Pretty</Button>
+                                                <Button>Raw</Button>
+                                                <Button>Preview</Button>
+                                            </ButtonGroup>
                                         </TabPane>
                                         <TabPane tab="Cookies" key="2">
                         
