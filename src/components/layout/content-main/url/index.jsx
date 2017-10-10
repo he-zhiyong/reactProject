@@ -1,6 +1,6 @@
 import React from 'react';
 import './url.less';
-import { Dropdown, Input ,Select, Menu } from 'antd';
+import { Dropdown, Input ,Select, Menu, message} from 'antd';
 const Option = Select.Option;
 
 export default class ContentMain extends React.Component {
@@ -32,10 +32,39 @@ export default class ContentMain extends React.Component {
         );
         return (
             <div className="url">
-                <Input addonBefore={selectBefore} addonAfter={<span className="addParams" onClick={() => alert(1)}>Params</span>} size="large" placeholder="Enter request URL" />
+                <Input addonBefore={selectBefore} addonAfter={<span className="addParams" onClick={() => alert(1)}>Params</span>} 
+                    size="large" placeholder="Enter request URL" 
+                />
                 <div className="buttons">
-                    <Dropdown.Button type="primary" size="large" onClick={() => alert(1)} overlay={menu} loading >Send</Dropdown.Button>
-                    <Dropdown.Button size="large" onClick={() => alert(1)} overlay={menu} loading>Save</Dropdown.Button>
+                    <Dropdown.Button type="primary" size="large" overlay={menu} onClick={() => {
+                        var options = {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                options:this.props.proxyOptions
+                            })
+                        }
+                        fetch('/api/proxy', options)
+                            .then((res) => {
+                                if(res.status>=200 && res.status<300){
+                                    return res.json()
+                                }
+                            }).then(result => {
+                                if(result.success){
+                                    message.success(result.message);
+                                    console.log(result.proxyResult)
+                                }else{
+                                    message.success(result.message);
+                                }
+                                
+                            })
+                    }} >
+                        Send
+                    </Dropdown.Button>
+                    <Dropdown.Button size="large" onClick={() => alert(1)} overlay={menu}>Save</Dropdown.Button>
                 </div>
             </div>
         )

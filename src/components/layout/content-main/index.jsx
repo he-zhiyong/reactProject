@@ -18,9 +18,21 @@ export default class ContentMain extends React.Component {
         this.state = {
             activeKey: panes[0].key,
             panes,
+            proxyOptions:{
+                url: 'http://192.168.1.115/libinterview',
+                method: 'post',
+                headers: {
+                    "content-type": "application/json",
+                    "Cookie": "session_id=1cea18bfb7f7f60c901b1320a17c3820;"
+                },
+                body:{"SERVICE_ID":[0,5,50],"function":"system","classify":"library","input":"","offset":0,"rows":20,"page":1,"pageSize":20}
+            }
         };
     }
     render() {
+        const proxy = {
+            proxyOptions:this.state.proxyOptions
+        }
         return (
             <Content>
                 <Tabs
@@ -32,7 +44,7 @@ export default class ContentMain extends React.Component {
                     {this.state.panes.map(pane =>
                         <TabPane tab={pane.title} key={pane.key}>
                             <div className="header">
-                                <Url/>
+                                <Url {...proxy}/>
                             </div>
                             <div className="body">
                                 <Request/>

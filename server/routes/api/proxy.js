@@ -1,72 +1,28 @@
-//var express = require('express');
-//var router = express.Router();
-var request = require('request');
+const express = require('express');
+const router = express.Router();
+const request = require('request');
 
-var options = {
-    headers: {
-        "content-type": "application/json",
-    },
-    url: 'http://192.168.1.115/libinterview',
-    method: 'post',
-    gzip:true,
-    json: true,
-    body:{"SERVICE_ID":[0,5,50],"function":"system","classify":"library","input":"","offset":0,"rows":20,"page":1,"pageSize":20}
-};
-request(options, (error, response, result) => {
-    if (!error && response.statusCode === 200) {
-        console.log('------接口数据------');
-        if(result.success){
-            console.log(result.data.list)
-        }
-    }else{
-        console.log(error)
+router.post('/', function (req, res) {
+    var result = {
+        success: false
     }
-});
-
-
-/* var options = {
-    headers: {
-        "content-type": "application/json",
-        "Cookie": "session_id=dc9bf3ee7bf6e444a5a29426afc14105;"
-    },
-    url: 'http://192.168.1.115/libinterview',
-    method: 'post',
-    gzip:true,
-    json: true,
-    body:{"SERVICE_ID":[0,5,50],"function":"system","classify":"library","input":"","offset":0,"rows":20,"page":1,"pageSize":20}
-};
-request(options, (error, response, result) => {
-    if (!error && response.statusCode === 200) {
-        console.log('------接口数据------');
-        if(result.success){
-            console.log(result.data.list)
-        }
-    }else{
-        console.log(error)
-    }
-}); */
-
-/* router.all('/*', function (req, res) {
-    var method = req.method.toUpperCase();
-    var proxy_url = 'http://192.168.1.115';
-    var options = {
-        headers: {
-            "Connection": "close"
-        },
-        url: proxy_url,
-        method: method,
-        json: true,
-        body: req.body
+    var defaultOptions = {
+        gzip:true,
+        json:true
     };
-
-    function callback(error, response, data) {
-        if (!error && response.statusCode == 200) {
-            console.log('------接口数据------', data);
-
-            res.json(data)
+    var options = Object.assign(defaultOptions,req.body.options||{});
+    request(options, (error, response, proxyResult) => {
+        if (!error && response.statusCode === 200) {
+            result.success = true;
+            result.message = "请求成功！";
+            result.proxyResult = proxyResult;
+            res.send(result);
+        }else{
+            result.message = "请求错误！";
+            result.error = error;
+            res.send(result);
         }
-    }
-    request(options, callback);
+    });
 })
 
-module.exports = router; */
+module.exports = router;
