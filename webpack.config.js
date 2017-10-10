@@ -70,7 +70,13 @@ var config = {
                 collapseWhitespace: true
             }
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.LoaderOptionsPlugin({
+        // test: /\.xxx$/, // may apply this only for some modules
+        options: {
+           alias: "jsx"
+        }
+       })
     ]
 };
 
