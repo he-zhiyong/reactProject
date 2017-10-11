@@ -23,7 +23,7 @@ export default class ContentMain extends React.Component {
                 method: 'post',
                 headers: {
                     "content-type": "application/json",
-                    "Cookie": "session_id=1cea18bfb7f7f60c901b1320a17c3820;"
+                    "Cookie": "session_id=7ef0b6f4c5b6b90473256fe65f159c92; loginName=qzma"
                 },
                 body:{"SERVICE_ID":[0,5,50],"function":"system","classify":"library","input":"","offset":0,"rows":20,"page":1,"pageSize":20}
             }
