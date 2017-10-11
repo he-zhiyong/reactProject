@@ -1,8 +1,8 @@
 import React from 'react';
 import './content-main.less';
-import Url from './url/index.jsx';
-import Request from './request/index.jsx';
-import Response from './response/index.jsx';
+import Url from './url';
+import Request from './request';
+import Response from './response';
 import { Layout, Tabs} from 'antd';
 const Content = Layout.Content;
 const TabPane = Tabs.TabPane;

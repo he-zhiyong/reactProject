@@ -1,10 +1,10 @@
 import React from 'react';
 import './home.less';
 import moment from 'moment';
-import SiderMain from '../../components/layout/sider-main/index.jsx';
-import HeaderMain from '../../components/layout/header-main/index.jsx';
-import ContentMain from '../../components/layout/content-main/index.jsx';
-import FooterMain from '../../components/layout/footer-main/index.jsx';
+import SiderMain from '../../components/layout/sider-main';
+import HeaderMain from '../../components/layout/header-main';
+import ContentMain from '../../components/layout/content-main';
+import FooterMain from '../../components/layout/footer-main';
 import { Layout } from 'antd';
 
 export default class Home extends React.Component {
