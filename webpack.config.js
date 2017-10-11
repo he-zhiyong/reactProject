@@ -13,6 +13,10 @@ var config = {
         filename: '[name].js',
         publicPath: './'
     },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        alias: {}
+    },
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
@@ -71,12 +75,6 @@ var config = {
             }
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.LoaderOptionsPlugin({
-        // test: /\.xxx$/, // may apply this only for some modules
-        options: {
-           alias: "jsx"
-        }
-       })
     ]
 };
 
