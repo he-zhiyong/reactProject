@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/common.less';
+import './styles/index.less';
 import Routes from './routes';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
